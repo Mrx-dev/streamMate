@@ -2,6 +2,7 @@ import { ExtendedClient } from '../types/ExtendedClient';
 import fs from 'fs';
 import path from 'path';
 import { Command } from '../types/commandType';
+import { logger } from '../src/helpers/logger';
 
 export const loadCommands = async (client: ExtendedClient) => {
   const foldersPath = path.join(__dirname, '../src/commands');
@@ -21,10 +22,10 @@ export const loadCommands = async (client: ExtendedClient) => {
           client.commands.set(command.data.name, command);
           client.registeredCommands.push(command.data.toJSON());
         } else {
-          console.warn(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+          logger.warn(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
         }
       } catch (err) {
-        console.error(`Error loading command at ${filePath}: ${err}`);
+        logger.error(`Error loading command at ${filePath}: ${err}`);
       }
     }
   }

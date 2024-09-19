@@ -1,9 +1,10 @@
-import { ExtendedClient } from '../types/ExtendedClient'; // Adjust path as needed
+import { ExtendedClient } from '../types/ExtendedClient';
 import fs from 'fs';
 import path from 'path';
+import { logger } from '../src/helpers/logger';
 
 export const loadEvents = (client: ExtendedClient) => {
-  const eventsPath = path.join(__dirname, '../src/events'); // Adjust path to the 'events' folder
+  const eventsPath = path.join(__dirname, '../src/events');
   const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith('.ts'));
 
   for (const file of eventFiles) {
@@ -18,7 +19,7 @@ export const loadEvents = (client: ExtendedClient) => {
         }
       })
       .catch((err) => {
-        console.error(`Error loading event ${filePath}: ${err}`);
+        logger.error(`Error loading event ${filePath}: ${err}`);
       });
   }
 };
