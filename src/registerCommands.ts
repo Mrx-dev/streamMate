@@ -16,10 +16,13 @@ export const registerCommands = async (
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
     const rest = new REST({ version: '10' }).setToken(token);
-
+    let data: any;
     // Update the commands for the guild
-    const data: any = await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
-
+    if (process.env.NODE_ENV === 'production') {
+      data = await rest.put(Routes.applicationCommands(clientId), { body: commands });
+    } else if (process.env.NODE_ENV === 'development') {
+      data = await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
+    }
     console.log(`Successfully reloaded ${data.length} application (/) commands.`);
   } catch (error) {
     console.error(`Error refreshing commands:`, error);

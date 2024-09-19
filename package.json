@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "Your Ultimate Video Streaming Bot for Voice Channels.",
   "main": "src/index.ts",
+  "engines": {
+    "node": ">=18.20.3 <21.0.0"
+  },
   "scripts": {
-    "start": "ts-node .",
+    "start": "NODE_ENV=development ts-node .",
+    "prod": "NODE_ENV=production ts-node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "MrxDev",
   "license": "ISC",
   "dependencies": {
     "@dank074/discord-video-stream": "^3.2.0",
@@ -18,7 +22,7 @@
     "fs": "^0.0.1-security"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4",
+    "nodemon": "^3.1.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }
