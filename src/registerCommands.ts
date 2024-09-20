@@ -1,5 +1,5 @@
 import { Client, REST, Routes, RESTPostAPIApplicationCommandsJSONBody } from 'discord.js';
-import { logger } from './helpers/logger';
+import { clientLogger } from './helpers/logger';
 
 export const registerCommands = async (
   client: Client,
@@ -11,11 +11,11 @@ export const registerCommands = async (
     const clientId = client.user?.id;
 
     if (!clientId) {
-      logger.error('Client ID not available. Make sure the client is logged in.');
+      clientLogger.error('Client ID not available. Make sure the client is logged in.');
       process.exit(-1);
     }
 
-    logger.info(`Started refreshing ${commands.length} application (/) commands.`);
+    clientLogger.info(`Started refreshing ${commands.length} application (/) commands.`);
 
     const rest = new REST({ version: '10' }).setToken(token);
     let data: any;
@@ -25,8 +25,8 @@ export const registerCommands = async (
     } else if (process.env.NODE_ENV === 'development') {
       data = await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
     }
-    logger.info(`Successfully reloaded ${data.length} application (/) commands.`);
+    clientLogger.info(`Successfully reloaded ${data.length} application (/) commands.`);
   } catch (error) {
-    logger.error(`Error refreshing commands:`, error);
+    clientLogger.error(`Error refreshing commands:`, error);
   }
 };

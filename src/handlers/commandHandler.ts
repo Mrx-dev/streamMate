@@ -2,10 +2,10 @@ import { ExtendedClient } from '../types/ExtendedClient';
 import fs from 'fs';
 import path from 'path';
 import { Command } from '../types/commandType';
-import { logger } from '../src/helpers/logger';
+import { clientLogger } from '../helpers/logger';
 
 export const loadCommands = async (client: ExtendedClient) => {
-  const foldersPath = path.join(__dirname, '../src/commands');
+  const foldersPath = path.join(__dirname, '../commands');
   const commandFolders = fs.readdirSync(foldersPath);
 
   for (const folder of commandFolders) {
@@ -22,10 +22,10 @@ export const loadCommands = async (client: ExtendedClient) => {
           client.commands.set(command.data.name, command);
           client.registeredCommands.push(command.data.toJSON());
         } else {
-          logger.warn(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+          clientLogger.warn(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
         }
       } catch (err) {
-        logger.error(`Error loading command at ${filePath}: ${err}`);
+        clientLogger.error(`Error loading command at ${filePath}: ${err}`);
       }
     }
   }

@@ -1,9 +1,9 @@
 import { Client, Events } from 'discord.js';
-import { logger } from '../helpers/logger';
+import { clientLogger } from '../helpers/logger';
 module.exports = {
   name: Events.ClientReady,
   once: true,
   execute(client: Client) {
-    logger.info(`Ready! Logged in as ${client.user?.tag}`);
+    clientLogger.info(`Ready! Logged in as ${client.user?.tag}`);
   },
 };
