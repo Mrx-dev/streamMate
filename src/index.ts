@@ -5,6 +5,7 @@ import { checkEnv } from './helpers/checkEnv';
 import { loadCommands } from '../handlers/commandHandler';
 import { loadEvents } from '../handlers/eventHandler';
 import { registerCommands } from './registerCommands';
+import { logger } from './helpers/logger';
 
 config();
 const client: ExtendedClient = new Client({
@@ -21,3 +22,5 @@ client.registeredCommands = [];
   await loadCommands(client);
   await registerCommands(client, process.env.TEST_GUILD_ID!, process.env.TOKEN!, client.registeredCommands);
 })();
+
+process.on('uncaughtException', (err) => logger.error(err));
